@@ -1,0 +1,10 @@
+﻿const express = require('express');
+const router = express.Router();
+const c = require('../controllers/leaveController');
+router.post('/', c.create);
+router.get('/pending', c.getPending);
+router.get('/employee/:employeeId', c.getByEmployee);
+router.put('/:id/approve', c.approve);
+router.put('/:id/reject', c.reject);
+router.put('/:id/cancel', c.cancel);
+module.exports = router;
