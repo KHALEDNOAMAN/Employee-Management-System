@@ -1,6 +1,6 @@
-﻿<div align="center">
+<div align="center">
 
-# ðŸ‘¥ Employee Management System
+# 👥 Employee Management System
 
 **Full-Stack HR Platform with Attendance, Leave Management & Department Analytics**
 
@@ -16,86 +16,56 @@ A comprehensive Employee Management System built during a software engineering i
 
 ---
 
-## âœ¨ Features
+## ✨ Features
 
-- ðŸ‘¤ **Employee Management** - Full CRUD with multi-step wizard, profile pages, soft delete
-- â° **Attendance Tracking** - Daily check-in/check-out with status tracking and hours calculation
-- ðŸ“‹ **Leave Management** - Request, approve, reject workflow with balance tracking
-- ðŸ¢ **Department Hierarchy** - Org chart with recursive CTE queries and tree visualization
-- ðŸ“Š **Analytics Dashboard** - Headcount, attendance rates, leave utilization charts
-- ðŸ” **Search & Filter** - Debounced search, department/status/type filters, server-side pagination
-- ðŸ“¸ **File Upload** - Avatar upload with Multer (5MB limit, image validation)
-- ðŸ—‘ï¸ **Soft Delete** - deleted_at timestamp pattern, data never truly lost
-- ðŸ§® **Working Days Calculator** - Excludes weekends and Turkish public holidays
-- ðŸ‡¹ðŸ‡· **Turkish Localization** - Turkish names, phone formats (+90), TRY currency
+- 👤 **Employee Management** - Full CRUD with multi-step wizard, profile pages, soft delete
+- ⏰ **Attendance Tracking** - Daily check-in/check-out with status tracking and hours calculation
+- 🌴 **Leave Management** - Request, approve, reject workflow with balance tracking
+- 🏢 **Department Hierarchy** - Org chart with recursive CTE queries and tree visualization
+- 📊 **Analytics Dashboard** - Headcount, attendance rates, leave utilization charts
+- 🔍 **Search & Filter** - Debounced search, department/status/type filters, server-side pagination
+- 📷 **File Upload** - Avatar upload with Multer (5MB limit, image validation)
+- 🗑️ **Soft Delete** - deleted_at timestamp pattern, data never truly lost
+- 📅 **Working Days Calculator** - Excludes weekends and Turkish public holidays
+- 🇹🇷 **Turkish Localization** - Turkish names, phone formats (+90), TRY currency
 
-## ðŸ—ï¸ Architecture
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚ React Frontendâ”‚â”€â”€â”€â”€â–¶â”‚ Express.js API   â”‚â”€â”€â”€â”€â–¶â”‚ PostgreSQL   â”‚
-â”‚ (Chart.js)    â”‚     â”‚ (JWT + RBAC)     â”‚     â”‚ (9 tables)   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
-
-## ðŸ“ Project Structure
+## 🏗️ Architecture
 
 ```
-Employee-Management-System/
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ controllers/     # Request handlers (5 controllers)
-â”‚   â”‚   â”œâ”€â”€ services/        # Business logic (4 services)
-â”‚   â”‚   â”œâ”€â”€ routes/          # API routes (5 route files)
-â”‚   â”‚   â”œâ”€â”€ middleware/      # Auth, upload, error handling
-â”‚   â”‚   â””â”€â”€ utils/           # Helpers, working days calculator
-â”‚   â”œâ”€â”€ migrations/          # 6 database migrations
-â”‚   â”œâ”€â”€ seeds/               # Sample data (20 Turkish employees)
-â”‚   â””â”€â”€ tests/               # Unit tests
-â”œâ”€â”€ frontend/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ components/      # 8 React components
-â”‚   â”‚   â”œâ”€â”€ hooks/           # Custom hooks
-â”‚   â”‚   â”œâ”€â”€ services/        # API layer
-â”‚   â”‚   â””â”€â”€ utils/           # Formatters
-â””â”€â”€ README.md
+┌───────────────┐     ┌──────────────────┐     ┌──────────────┐
+│ React Frontend│────▶│ Express.js API   │────▶│ PostgreSQL   │
+│ (Dashboard)   │     │ (JWT + Services) │     │ (6 tables)   │
+└───────────────┘     └──────────────────┘     └──────────────┘
 ```
 
-## ðŸ—„ï¸ Database Schema (9 Tables)
+## 📡 API Endpoints
 
-| Table | Description | Key Columns |
-|-------|-------------|-------------|
-| departments | Department hierarchy | parent_id (self-ref), budget |
-| positions | Job positions | salary range, pay grade |
-| employees | Core employee data | 25+ columns, soft delete |
-| attendance_records | Daily check-in/out | UNIQUE(employee, date) |
-| leave_requests | Leave with workflow | status: pending/approved/rejected |
-| leave_balances | Annual balances | per type, per year |
-| salary_history | Compensation changes | old/new salary, reason |
-| employee_documents | File attachments | type, path, size |
-| employee_notes | Internal notes | author tracking |
-
-## ðŸ“¡ API Endpoints
-
-### Employees
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/employees` | List (search, filter, paginate) |
-| GET | `/api/employees/:id` | Get profile with relations |
+| GET | `/api/employees` | List employees (search, filter, paginate) |
 | POST | `/api/employees` | Create new employee |
+| GET | `/api/employees/:id` | Employee profile |
 | PUT | `/api/employees/:id` | Update employee |
 | DELETE | `/api/employees/:id` | Soft delete |
+| GET | `/api/departments/tree` | Department hierarchy |
+| POST | `/api/attendance/check-in` | Clock in |
+| POST | `/api/attendance/check-out` | Clock out |
+| POST | `/api/leave` | Request leave |
+| PUT | `/api/leave/:id/approve` | Approve leave |
+| GET | `/api/reports/summary` | Dashboard analytics |
 
-### Attendance & Leave
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/attendance/check-in` | Record check-in |
-| POST | `/api/attendance/check-out` | Record check-out |
-| POST | `/api/leave` | Submit leave request |
-| PUT | `/api/leave/:id/approve` | Approve (deducts balance) |
-| PUT | `/api/leave/:id/reject` | Reject with notes |
+## 🗃️ Database Schema
 
-## ðŸš€ Getting Started
+| Table | Key Fields |
+|-------|-----------|
+| departments | name, code, parent_id (self-ref), budget |
+| positions | title, min/max_salary, pay_grade |
+| employees | employee_number (EMP-YYYY-NNN), department_id, position_id, salary, deleted_at |
+| attendance_records | employee_id, date, check_in/out, total_hours, UNIQUE(emp,date) |
+| leave_requests | leave_type, start/end_date, status, reviewed_by |
+| leave_balances | employee_id, leave_type, total/used/remaining, year |
+
+## 🚀 Getting Started
 
 ```bash
 git clone https://github.com/KHALEDNOAMAN/Employee-Management-System.git
@@ -105,12 +75,8 @@ npx knex migrate:latest && npx knex seed:run
 npm run dev
 ```
 
-## ðŸ“ License
-
+## 📝 License
 MIT License - see [LICENSE](LICENSE) file.
 
 ---
-
-<div align="center">
-  Built with â¤ï¸ during internship at EduTech Yazilim A.S. - Istanbul, Turkey
-</div>
+<div align="center">Built with ❤️ during internship at EduTech Yazilim A.S. - Istanbul, Turkey</div>
